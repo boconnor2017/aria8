@@ -46,4 +46,10 @@ sh photon/install_vsphere_py_sdk.sh
 sh photon/install_vsphere_py_sdk.sh sh photon/install_pyvmomi.sh
 ```
 
-## 
+## Step 1: Edit the JSON Configuration 
+Populate the variables in `json/lab_environment.json`. The automation will use these values to connect to your existing VCF environment. 
+
+## Step 2: Deploy Aria
+```
+python3 hesiod-aria8.py
+```

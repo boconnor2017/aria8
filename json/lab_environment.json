@@ -1,0 +1,13 @@
+{
+    "logs" : {
+        "test.py" : "_test.log",
+        "hesiod-aria8.py" : "_hesiod-aria8.log"
+    },    
+    "vcf": {
+        "management_vcenter" : {
+            "ip" : "172.16.10.35",
+            "username" : "administrator@vsphere.local",
+            "password" : "VMware123!VMware123!"
+        }
+    }
+}
