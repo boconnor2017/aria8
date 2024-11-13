@@ -5,9 +5,9 @@
     },    
     "vcf": {
         "management_vcenter" : {
-            "ip" : "172.16.10.35",
-            "username" : "administrator@vsphere.local",
-            "password" : "VMware123!VMware123!"
+            "ip" : "",
+            "username" : "",
+            "password" : ""
         }
     }
 }
