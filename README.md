@@ -28,6 +28,9 @@ git clone https://github.com/boconnor2017/hesiod-aria8
 cp -r hesiod/python/ hesiod-aria8/hesiod
 ```
 ```
+mkdir hesiod-aria8/photon/
+```
+```
 cp -r hesiod/photon/install_vsphere_py_sdk.sh hesiod-aria8/photon
 ```
 ```
