@@ -39,5 +39,11 @@ cp -r hesiod/photon/install_pyvmomi.sh hesiod-aria8/photon
 ```
 cd hesiod-aria8
 ```
+```
+sh photon/install_vsphere_py_sdk.sh
+```
+```
+sh photon/install_vsphere_py_sdk.sh sh photon/install_pyvmomi.sh
+```
 
 ## 
