@@ -66,7 +66,29 @@ def _main_():
         err = "    User "+str(i+1)+": "+env_json_py["aria"]["lifecycle_manager_users_for_locker"][i]["username"]+"/"+env_json_py["aria"]["lifecycle_manager_users_for_locker"][i]["password"]
         liblog.write_to_logs(err, logfile_name)
         aslcm_session_return_code = arialib.create_aslcm_locker_users(aslcm_token, env_json_py["aria"]["lifecycle_manager"]["fqdn"], env_json_py["aria"]["lifecycle_manager_users_for_locker"][i]["password"], env_json_py["aria"]["lifecycle_manager_users_for_locker"][i]["username"])
+        err = "Return: "+str(aslcm_session_return_code)
+        liblog.write_to_logs(err, logfile_name)
         i=i+1
 
+    # Create Datacenter
+    err = "Creating ASLCM datacenters. Count: "+str(len(env_json_py["aria"]["lifecycle_manager_datacenters"]))
+    liblog.write_to_logs(err, logfile_name)
+    i=0
+    while i < len(env_json_py["aria"]["lifecycle_manager_datacenters"]):
+        err = "    Datacenter "+str(i+1)+": "+env_json_py["aria"]["lifecycle_manager_datacenters"][i]["name"]+"/"+env_json_py["aria"]["lifecycle_manager_datacenters"][i]["location"]
+        liblog.write_to_logs(err, logfile_name)
+        aslcm_session_return_code = arialib.create_aslcm_data_center(aslcm_token, env_json_py["aria"]["lifecycle_manager"]["fqdn"], env_json_py["aria"]["lifecycle_manager_datacenters"][i]["name"], env_json_py["aria"]["lifecycle_manager_datacenters"][i]["location"])
+        err = "Return: "+str(aslcm_session_return_code)
+        liblog.write_to_logs(err, logfile_name)
+        i=i+1
+
+    # Get config details from created datacenters
+    err = "VALIDATE: Getting ASLCM configured datacenters."
+    liblog.write_to_logs(err, logfile_name)
+    aslcm_session_return_json, aslcm_session_return_code = arialib.get_aslcm_datacenters(aslcm_token, env_json_py["aria"]["lifecycle_manager"]["fqdn"])
+    err = "Return: "+str(aslcm_session_return_code)
+    liblog.write_to_logs(err, logfile_name)
+    err = str(aslcm_session_return_json)
+    liblog.write_to_logs(err, logfile_name)
 
 _main_()

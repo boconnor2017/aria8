@@ -13,6 +13,12 @@ def authenticate_to_aslcm(aslcm_user, aslcm_pw, aslcm_fqdn):
     aslcm_session_return_code = (aslcm_session.status_code)
     return aslcm_token, aslcm_session_return_code
 
+def create_aslcm_data_center(aslcm_token, aslcm_fqdn, datacenter_name, datacenter_location):
+    #Syntax: curl -X POST '$url/lcm/lcops/api/v2/datacenters' -H 'Authorization: Basic <token>' -H 'Content-Type: application/json' -d '{"dataCenterName": "BLR","primaryLocation": "Bangalore; Karnataka;IN;12.97194;77.59369"}' 
+    aslcm_session = requests.get("https://"+aslcm_fqdn+"/lcm/lcops/api/v2/datacenters", headers={"Authorization": "Basic "+aslcm_token, "Content-Type": "application/json"}, data={"dataCenterName": datacenter_name, "primaryLocation": datacenter_location}, verify=False)
+    aslcm_session_return_code = (aslcm_session.status_code)
+    return aslcm_session_return_code
+
 def create_aslcm_locker_users(aslcm_token, aslcm_fqdn, new_password, new_username):
     #Syntax: curl -X POST '$url/lcm/locker/api/v2/passwords' -H 'Authorization: Basic <token>' -H 'Content-Type: application/json' -d '{"alias": "VC-password", "password": "ExampleLockerPassword", "passwordDescription": "", "principal": "", "transactionId": "", "userName": "", }'
     aslcm_session = requests.get("https://"+aslcm_fqdn+"/lcm/locker/api/v2/passwords", headers={"Authorization": "Basic "+aslcm_token, "Content-Type": "application/json"}, data={"alias": "VC-password", "password": new_password, "passwordDescription": "Hesiod Aria 8 Password Generated", "principal": "", "transactionId": "", "userName": new_username}, verify=False)
@@ -25,6 +31,12 @@ def get_aslcm_auth_token(aslcm_user, aslcm_pw):
     #aslcm_token = "b\'"+aslcm_token+"\'"
     return aslcm_token
 
+def get_aslcm_datacenters(aslcm_token, aslcm_fqdn):
+    #Syntax: curl -X GET '$url/lcm/lcops/api/v2/datacenters' -H 'Accept: application/json' -H 'Authorization: Basic <token>'
+    aslcm_session = requests.get("https://"+aslcm_fqdn+"/lcm/lcops/api/v2/datacenters", headers={"Authorization": "Basic "+aslcm_token, "Accept": "application/json"}, verify=False)
+    aslcm_session_return_code = (aslcm_session.status_code)
+    aslcm_session_return_json = (aslcm_session.json())
+    return aslcm_session_return_json, aslcm_session_return_code
 
 # vSphere Automation Python SDK Functions
 def connect_to_vcenter(vcenter_ip, vcenter_username, vcenter_password, session):

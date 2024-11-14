@@ -19,6 +19,10 @@
         "lifecycle_manager_users_for_locker" : [{
             "username" : "",
             "password" : ""
+        }],
+        "lifecycle_manager_datacenters" : [{
+            "name" : "", 
+            "location" : ""
         }]
     }
 }
