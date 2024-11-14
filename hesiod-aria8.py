@@ -34,7 +34,10 @@ liblog.write_to_logs(err, logfile_name)
 
 # Local Functions
 def _main_():
+    # CLI Message
     print("Deploying Aria Suite.")
+
+    # Connect to Management vCenter using JSON config params
     err = "Connecting to vCenter: IP="+env_json_py["vcf"]["management_vcenter"]["ip"]+", UN="+env_json_py["vcf"]["management_vcenter"]["username"]+", "+env_json_py["vcf"]["management_vcenter"]["password"]
     liblog.write_to_logs(err, logfile_name)
     vsphere_client = arialib.connect_to_vcenter(env_json_py["vcf"]["management_vcenter"]["ip"], env_json_py["vcf"]["management_vcenter"]["username"], env_json_py["vcf"]["management_vcenter"]["password"], session)
@@ -43,6 +46,14 @@ def _main_():
     vm_list = arialib.list_vms_from_vcenter(vsphere_client)
     vm_count = len(vm_list)
     err = "VM Count: "+str(vm_count)
+    liblog.write_to_logs(err, logfile_name)
+
+    # Deploy Aria Suite Lifecycle Manager 
+    print("    TODO: Deploy Aria Suite Lifecycle Manager.")
+    err = "Connecting to Aria Suite LCM."
+    liblog.write_to_logs(err, logfile_name)
+    aslcm_session, aslcm_session_status_code = arialib.authenticate_to_aslcm(env_json_py["aria"]["lifecycle_manager"]["username"], env_json_py["aria"]["lifecycle_manager"]["password"], env_json_py["aria"]["lifecycle_manager"]["fqdn"])
+    err = "Return: "+str(aslcm_session_status_code)
     liblog.write_to_logs(err, logfile_name)
 
 _main_()

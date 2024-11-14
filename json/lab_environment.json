@@ -9,5 +9,12 @@
             "username" : "",
             "password" : ""
         }
+    }, 
+    "aria" : {
+        "lifecycle_manager" : {
+            "username" : "admin@local",
+            "password" : "",
+            "fqdn" : ""
+        }
     }
 }
