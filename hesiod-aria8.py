@@ -48,12 +48,25 @@ def _main_():
     err = "VM Count: "+str(vm_count)
     liblog.write_to_logs(err, logfile_name)
 
-    # Deploy Aria Suite Lifecycle Manager 
+    # Deploy Aria Suite Lifecycle Manager and Get Token
     print("    TODO: Deploy Aria Suite Lifecycle Manager.")
-    err = "Connecting to Aria Suite LCM."
+    err = "Connecting to Aria Suite LCM. FQDN: "+env_json_py["aria"]["lifecycle_manager"]["fqdn"]
     liblog.write_to_logs(err, logfile_name)
-    aslcm_session, aslcm_session_status_code = arialib.authenticate_to_aslcm(env_json_py["aria"]["lifecycle_manager"]["username"], env_json_py["aria"]["lifecycle_manager"]["password"], env_json_py["aria"]["lifecycle_manager"]["fqdn"])
-    err = "Return: "+str(aslcm_session_status_code)
+    aslcm_token, aslcm_session_return_code = arialib.authenticate_to_aslcm(env_json_py["aria"]["lifecycle_manager"]["username"], env_json_py["aria"]["lifecycle_manager"]["password"], env_json_py["aria"]["lifecycle_manager"]["fqdn"])
+    err = "Return: "+str(aslcm_session_return_code)
     liblog.write_to_logs(err, logfile_name)
+    err = "Auth Token: "+aslcm_token
+    liblog.write_to_logs(err, logfile_name)
+
+    # Create Passwords in ASLCM Password Locker
+    err = "Creating ASLCM users for password locker. Count: "+str(len(env_json_py["aria"]["lifecycle_manager_users_for_locker"]))
+    liblog.write_to_logs(err, logfile_name)
+    i=0
+    while i < len(env_json_py["aria"]["lifecycle_manager_users_for_locker"]):
+        err = "    User "+str(i+1)+": "+env_json_py["aria"]["lifecycle_manager_users_for_locker"][i]["username"]+"/"+env_json_py["aria"]["lifecycle_manager_users_for_locker"][i]["password"]
+        liblog.write_to_logs(err, logfile_name)
+        aslcm_session_return_code = arialib.create_aslcm_locker_users(aslcm_token, env_json_py["aria"]["lifecycle_manager"]["fqdn"], env_json_py["aria"]["lifecycle_manager_users_for_locker"][i]["password"], env_json_py["aria"]["lifecycle_manager_users_for_locker"][i]["username"])
+        i=i+1
+
 
 _main_()
