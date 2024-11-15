@@ -90,5 +90,24 @@ def _main_():
     liblog.write_to_logs(err, logfile_name)
     err = str(aslcm_session_return_json)
     liblog.write_to_logs(err, logfile_name)
+    i=0
+    while i < len(aslcm_session_return_json):
+        err = "    Datacenter ID for "+aslcm_session_return_json[i]["dataCenterName"]+": "+aslcm_session_return_json[i]["dataCenterVmid"]
+        liblog.write_to_logs(err, logfile_name)
+        i=i+1
+
+    # Add VCF Managment vCenter to ASLCM Datacenter
+    err = "Adding Management vCenter ("+env_json_py["vcf"]["management_vcenter"]["fqdn"]+") to ASLCM Datacenter "+str(env_json_py["vcf"]["management_vcenter"]["lifecycle_manager_datacenter_mapping"])+"."
+    liblog.write_to_logs(err, logfile_name)
+    
 
 _main_()
+
+
+'''
+Test space:
+
+curl -k -X POST 'https://hesvcf-aria01.hesiod.local/lcm/lcops/api/v2/datacenters' -H 'Authorization: Basic YWRtaW5AbG9jYWw6Vk13YXJlMTIzIVZNd2FyZTEyMyE=' -H 'Content-Type: application/json' -d '{"dataCenterName": "BLR","primaryLocation": "Bangalore; Karnataka;IN;12.97194;77.59369"}'
+
+
+'''

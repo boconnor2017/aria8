@@ -7,7 +7,11 @@
         "management_vcenter" : {
             "ip" : "",
             "username" : "",
-            "password" : ""
+            "password" : "", 
+            "fqdn" : "",
+            "vcenter_name" : "",
+            "vcenter_used_as" : "MANAGEMENT",
+            "lifecycle_manager_datacenter_mapping" : 0
         }
     }, 
     "aria" : {
