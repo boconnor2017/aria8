@@ -133,5 +133,45 @@ def _main_():
         liblog.write_to_logs(err, logfile_name)
         i=i+1
     
+    # Pause for Manual Downloads
+    '''
+    Following the VMware by Broadcom Day 2 transition on May 6, 2024, 
+    Customer Connect has been migrated to the Broadcom Support. 
+    This migration impacts the VMware Aria Suite Lifecycle as follows:
+    All Product Support Packs, along with product and patch binaries, 
+    will now need to be downloaded from the Broadcom Support Portal.
+    Users must then manually map these into the VMware Aria Suite 
+    Lifecycle. VMware Aria Suite Lifecycle can be upgraded using "Check Online" method.
+    Product Support Packs are cumulative, incorporating all updates from previous 
+    product support packs as well as patches into the latest version.
+    
+    '''
+    print("")
+    print("INFO: Pausing script. Please see below:")
+    print("############################################################################")
+    print("############################################################################")
+    print("### Following the VMware by Broadcom Day 2 transition on May 6, 2024    ###")
+    print("### Customer Connect has been migrated to the Broadcom Support.         ###")
+    print("### This migration impacts the VMware Aria Suite Lifecycle as follows:  ###")
+    print("### All Product Support Packs, along with product and patch binaries,   ###")
+    print("### will now need to be downloaded from the Broadcom Support Portal.    ###")
+    print("###                                                                     ###")
+    print("### Users must then MANUALLY map these into the VMware Aria Suite       ###")
+    print("### Lifecycle.                                                          ###")
+    print("############################################################################")
+    print("############################################################################")
+    print("")
+    print("(Booooo...)")
+    print("")
+    print("Follow these manual steps very carefully before proceeding:")
+    print("    01. Login to the Broadcom Support Portal: https://support.broadcom.com/group/ecx/downloads")
+    print("    02. Find \"VMWare Aria Universal\" >> Open \"Enterprise\" >> click \"Subscription\"")
+    print("    03. Download VIRTUAL APPLIANCES (not the easy installers) for: Aria Automation, Aria Automation Config, Aria Operations, and Aria Operations for Logs.")
+    print("    04. Login to Aria Suite Lifecycle Manager.")
+    print("    05. Select Lifecycle Operations >> Settings >> Binary Mapping.")
+    print("    06. Click \"Add Binaries\". Point to the base location of your ovas. Click \"Discover\". ")
+    print("")
+    continue_the_cool_after_manual_nonesense = input("Press any key to continue.")
+
 
 _main_()
