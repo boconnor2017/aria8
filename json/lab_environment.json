@@ -10,8 +10,7 @@
             "password" : "", 
             "fqdn" : "",
             "vcenter_name" : "",
-            "vcenter_used_as" : "MANAGEMENT",
-            "lifecycle_manager_datacenter_mapping" : 0
+            "vcenter_used_as" : "MANAGEMENT"
         }
     }, 
     "aria" : {

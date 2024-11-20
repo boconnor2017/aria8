@@ -97,9 +97,9 @@ def _main_():
         i=i+1
 
     # Add VCF Managment vCenter to ASLCM Datacenter
-    err = "Adding Management vCenter ("+env_json_py["vcf"]["management_vcenter"]["fqdn"]+") to ASLCM Datacenter "+str(env_json_py["vcf"]["management_vcenter"]["lifecycle_manager_datacenter_mapping"])+"."
+    err = "Adding Management vCenter "+env_json_py["vcf"]["management_vcenter"]["vcenter_name"]+"."
     liblog.write_to_logs(err, logfile_name)
-    aslcm_session_return_code = arialib.add_vcenter_to_aslcm_datacenter(aslcm_token, aslcm_fqdn, vcenter_name, vcenter_fqdn, vcenter_username, vcenter_password, vcenter_used_as)
+    aslcm_session_return_code = arialib.add_vcenter_to_aslcm_datacenter(aslcm_token, env_json_py["aria"]["lifecycle_manager"]["fqdn"], env_json_py["vcf"]["management_vcenter"]["vcenter_name"], env_json_py["vcf"]["management_vcenter"]["fqdn"], env_json_py["vcf"]["management_vcenter"]["username"], env_json_py["vcf"]["management_vcenter"]["password"], env_json_py["vcf"]["management_vcenter"]["vcenter_used_as"])
     err = "Return: "+str(aslcm_session_return_code)
     liblog.write_to_logs(err, logfile_name)
     
