@@ -49,7 +49,7 @@ def _main_():
     liblog.write_to_logs(err, logfile_name)
 
     # Deploy Aria Suite Lifecycle Manager and Get Token
-    print("    TODO: Deploy Aria Suite Lifecycle Manager.")
+    print("    TODO: Deploy Aria Suite Lifecycle Manager ova.")
     err = "Connecting to Aria Suite LCM. FQDN: "+env_json_py["aria"]["lifecycle_manager"]["fqdn"]
     liblog.write_to_logs(err, logfile_name)
     aslcm_token, aslcm_session_return_code = arialib.authenticate_to_aslcm(env_json_py["aria"]["lifecycle_manager"]["username"], env_json_py["aria"]["lifecycle_manager"]["password"], env_json_py["aria"]["lifecycle_manager"]["fqdn"])
@@ -114,7 +114,7 @@ def _main_():
     dc_vm_id = aslcm_session_return_json[env_json_py["vcf"]["management_vcenter"]["add_to_this_aslcm_datacenter"]]["dataCenterVmid"]
     err = "    Datacenter ID: ("+aslcm_session_return_json[env_json_py["vcf"]["management_vcenter"]["add_to_this_aslcm_datacenter"]]["dataCenterName"]+") "+dc_vm_id
     liblog.write_to_logs(err, logfile_name)
-    aslcm_session_return_code = arialib.add_vcenter_to_aslcm_datacenter(aslcm_token, env_json_py["vcf"]["management_vcenter"]["fqdn"], env_json_py["vcf"]["management_vcenter"]["vcenter_name"], env_json_py["vcf"]["management_vcenter"]["fqdn"], env_json_py["vcf"]["management_vcenter"]["username"], env_json_py["vcf"]["management_vcenter"]["password"], env_json_py["vcf"]["management_vcenter"]["vcenter_used_as"], dc_vm_id)
+    aslcm_session_return_code = arialib.add_vcenter_to_aslcm_datacenter(aslcm_token, env_json_py["aria"]["lifecycle_manager"]["fqdn"], env_json_py["vcf"]["management_vcenter"]["vcenter_name"], env_json_py["vcf"]["management_vcenter"]["fqdn"], env_json_py["vcf"]["management_vcenter"]["username"], env_json_py["vcf"]["management_vcenter"]["password"], env_json_py["vcf"]["management_vcenter"]["vcenter_used_as"], dc_vm_id)
     err = "Return: "+str(aslcm_session_return_code)
     liblog.write_to_logs(err, logfile_name)
     
