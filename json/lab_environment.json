@@ -10,7 +10,8 @@
             "password" : "", 
             "fqdn" : "",
             "vcenter_name" : "",
-            "vcenter_used_as" : "MANAGEMENT"
+            "vcenter_used_as" : "MANAGEMENT",
+            "add_to_this_aslcm_datacenter" : 0
         }
     }, 
     "aria" : {

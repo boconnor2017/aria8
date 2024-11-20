@@ -13,17 +13,17 @@ def authenticate_to_aslcm(aslcm_user, aslcm_pw, aslcm_fqdn):
     aslcm_session_return_code = (aslcm_session.status_code)
     return aslcm_token, aslcm_session_return_code
 
-def add_vcenter_to_aslcm_datacenter(aslcm_token, aslcm_fqdn, vcenter_name, vcenter_fqdn, vcenter_username, vcenter_password, vcenter_used_as):
-    #Syntax: curl -X POST '$url/lcm/lcops/api/v2/datacenters/$dataCenterVMid/vcenters' -H 'Accept: application/json' -H 'Authorization: Basic <token>=' -H 'Content-Type: application/json' -d '{"vCenterName": "VC1", "vCenterHost": "lcm-vc2.sqa.local", "vcUsername": "administrator@vsphere.local",  "vcPassword": "MyExamplePassword", "vcUsedAs": "MANAGEMENT"}'
+def add_vcenter_to_aslcm_datacenter(aslcm_token, aslcm_fqdn, vcenter_name, vcenter_fqdn, vcenter_username, vcenter_password, vcenter_used_as, dc_vm_id):
+    #Syntax: curl -k -X POST \'$url/lcm/lcops/api/v2/datacenters/$dataCenterVMid/vcenters' -H 'Accept: application/json' -H 'Authorization: Basic YWRtaW5AbG9jYWw6VGhpc0lzUGFzc3dvcmQ=' -H 'Content-Type: application/json' -d '{"vCenterName": "VC1","vCenterHost": "lcm-vc2.sqa.local","vcUsername": "administrator@vsphere.local","vcPassword": "MyExamplePassword","vcUsedAs": "MANAGEMENT"}'
     req_headers = {"Accept": "application/json", "Authorization": "Basic "+aslcm_token, "Content-Type": "application/json"}
     req_data = {
-        "vCenterName": vcenter_name, 
-        "vCenterHost": vcenter_fqdn, 
-        "vcUsername": vcenter_username,  
-        "vcPassword": vcenter_password, 
+        "vCenterName": vcenter_name,
+        "vCenterHost": vcenter_fqdn,
+        "vcUsername": vcenter_username,
+        "vcPassword": vcenter_password,
         "vcUsedAs": vcenter_used_as
     }
-    aslcm_session = requests.post("https://"+aslcm_fqdn+"/lcm/lcops/api/v2/datacenters", headers=req_headers, json=req_data, verify=False)
+    aslcm_session = requests.post("https://"+aslcm_fqdn+"/lcm/lcops/api/v2/datacenters/"+dc_vm_id+"/vcenters", headers=req_headers, json=req_data, verify=False)
     aslcm_session_return_code = (aslcm_session.status_code)
     return aslcm_session_return_code
 

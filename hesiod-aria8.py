@@ -99,18 +99,24 @@ def _main_():
     # Add VCF Managment vCenter to ASLCM Datacenter
     err = "Adding Management vCenter "+env_json_py["vcf"]["management_vcenter"]["vcenter_name"]+"."
     liblog.write_to_logs(err, logfile_name)
-    aslcm_session_return_code = arialib.add_vcenter_to_aslcm_datacenter(aslcm_token, env_json_py["aria"]["lifecycle_manager"]["fqdn"], env_json_py["vcf"]["management_vcenter"]["vcenter_name"], env_json_py["vcf"]["management_vcenter"]["fqdn"], env_json_py["vcf"]["management_vcenter"]["username"], env_json_py["vcf"]["management_vcenter"]["password"], env_json_py["vcf"]["management_vcenter"]["vcenter_used_as"])
+    err = "    FQDN: "+env_json_py["vcf"]["management_vcenter"]["fqdn"]+"."
+    liblog.write_to_logs(err, logfile_name)
+    err = "    IP: "+env_json_py["vcf"]["management_vcenter"]["ip"]+"."
+    liblog.write_to_logs(err, logfile_name)
+    err = "    Username: "+env_json_py["vcf"]["management_vcenter"]["username"]+"."
+    liblog.write_to_logs(err, logfile_name)
+    err = "    Password: "+env_json_py["vcf"]["management_vcenter"]["password"]+"."
+    liblog.write_to_logs(err, logfile_name)
+    err = "    vCenter Used As: "+env_json_py["vcf"]["management_vcenter"]["vcenter_used_as"]+"."
+    liblog.write_to_logs(err, logfile_name)
+    err = "    Add vCenter to this Datacenter: "+aslcm_session_return_json[env_json_py["vcf"]["management_vcenter"]["add_to_this_aslcm_datacenter"]]["dataCenterName"]+"."
+    liblog.write_to_logs(err, logfile_name)
+    dc_vm_id = aslcm_session_return_json[env_json_py["vcf"]["management_vcenter"]["add_to_this_aslcm_datacenter"]]["dataCenterVmid"]
+    err = "    Datacenter ID: ("+aslcm_session_return_json[env_json_py["vcf"]["management_vcenter"]["add_to_this_aslcm_datacenter"]]["dataCenterName"]+") "+dc_vm_id
+    liblog.write_to_logs(err, logfile_name)
+    aslcm_session_return_code = arialib.add_vcenter_to_aslcm_datacenter(aslcm_token, env_json_py["vcf"]["management_vcenter"]["fqdn"], env_json_py["vcf"]["management_vcenter"]["vcenter_name"], env_json_py["vcf"]["management_vcenter"]["fqdn"], env_json_py["vcf"]["management_vcenter"]["username"], env_json_py["vcf"]["management_vcenter"]["password"], env_json_py["vcf"]["management_vcenter"]["vcenter_used_as"], dc_vm_id)
     err = "Return: "+str(aslcm_session_return_code)
     liblog.write_to_logs(err, logfile_name)
     
 
 _main_()
-
-
-'''
-Test space:
-
-curl -k -X POST 'https://hesvcf-aria01.hesiod.local/lcm/lcops/api/v2/datacenters' -H 'Authorization: Basic YWRtaW5AbG9jYWw6Vk13YXJlMTIzIVZNd2FyZTEyMyE=' -H 'Content-Type: application/json' -d '{"dataCenterName": "BLR","primaryLocation": "Bangalore; Karnataka;IN;12.97194;77.59369"}'
-
-
-'''
