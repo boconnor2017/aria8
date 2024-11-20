@@ -66,6 +66,13 @@ def get_aslcm_datacenters(aslcm_token, aslcm_fqdn):
     aslcm_session_return_json = (aslcm_session.json())
     return aslcm_session_return_json, aslcm_session_return_code
 
+def get_aslcm_product_versions(aslcm_token, aslcm_fqdn, product_id):
+    #Syntax: curl -k -X GET '$url/lcm/lcops/api/v2/policy/products/{productId}/versions' -H 'Authorization: Basic YWRtaW5AbG9jYWw6VGhpc0lzUGFzc3dvcmQ=' -H 'Accept: application/json'
+    aslcm_session = requests.get("https://"+aslcm_fqdn+"/lcm/lcops/api/v2/policy/products/"+product_id+"/versions", headers={"Authorization": "Basic "+aslcm_token, "Accept": "application/json"}, verify=False)
+    aslcm_session_return_code = (aslcm_session.status_code)
+    aslcm_session_return_json = (aslcm_session.json())
+    return aslcm_session_return_json, aslcm_session_return_code
+
 # vSphere Automation Python SDK Functions
 def connect_to_vcenter(vcenter_ip, vcenter_username, vcenter_password, session):
     vsphere_client = create_vsphere_client(server=vcenter_ip, username=vcenter_username, password=vcenter_password, session=session)

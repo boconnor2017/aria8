@@ -12,6 +12,7 @@ import os
 import sys
 import requests
 import urllib3
+import json
 session = requests.session()
 session.verify = False
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -117,6 +118,20 @@ def _main_():
     aslcm_session_return_code = arialib.add_vcenter_to_aslcm_datacenter(aslcm_token, env_json_py["aria"]["lifecycle_manager"]["fqdn"], env_json_py["vcf"]["management_vcenter"]["vcenter_name"], env_json_py["vcf"]["management_vcenter"]["fqdn"], env_json_py["vcf"]["management_vcenter"]["username"], env_json_py["vcf"]["management_vcenter"]["password"], env_json_py["vcf"]["management_vcenter"]["vcenter_used_as"], dc_vm_id)
     err = "Return: "+str(aslcm_session_return_code)
     liblog.write_to_logs(err, logfile_name)
+
+    # Get Available Product Versions
+    err = "Getting available product versions."
+    liblog.write_to_logs(err, logfile_name)
+    i=0
+    while i < len(env_json_py["product_ids"]):
+        err = "    ID: "+env_json_py["product_ids"][i]["id"]
+        liblog.write_to_logs(err, logfile_name)
+        aslcm_session_return_json, aslcm_session_return_code = arialib.get_aslcm_product_versions(aslcm_token, env_json_py["aria"]["lifecycle_manager"]["fqdn"], env_json_py["product_ids"][i]["id"])
+        err = "    Return Code: "+aslcm_session_return_code
+        liblog.write_to_logs(err, logfile_name)
+        product_versions = json.dumps(aslcm_session_return_json)
+        err = "    Product Versions: "+product_versions
+        i=i+1
     
 
 _main_()
