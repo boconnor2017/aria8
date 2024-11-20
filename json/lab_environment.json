@@ -2,7 +2,31 @@
     "logs" : {
         "test.py" : "_test.log",
         "hesiod-aria8.py" : "_hesiod-aria8.log"
-    },    
+    },  
+    "products" : [{
+        "name" : "Aria Operations", 
+        "id" : "vrops"
+    },
+    {
+        "name" : "Aria Operations for Logs", 
+        "id" : "vrli"
+    },
+    {
+        "name" : "Aria Automation", 
+        "id" : "vra"
+    },
+    {
+        "name" : "Workspace ONE Access", 
+        "id" : "vidm"
+    },
+    {
+        "name" : "Aria Automation Config", 
+        "id" : "vssc"
+    },
+    {
+        "name" : "Aria Automation Orchestrator", 
+        "id" : "vro"
+    }],  
     "vcf": {
         "management_vcenter" : {
             "ip" : "",
@@ -28,37 +52,5 @@
             "name" : "", 
             "location" : ""
         }]
-    },
-    "product_ids" : [{
-        "product": "Aria Operations", 
-        "id": "vrops"
-    },
-    {
-        "product": "Aria Operations for Logs", 
-        "id": "vrli"
-    },
-    {
-        "product": "vRealize Business for Cloud", 
-        "id": "vrbc"
-    },
-    {
-        "product": "Aria Automation", 
-        "id": "vra"
-    },
-    {
-        "product": "Workspace ONE Access", 
-        "id": "vidm"
-    },
-    {
-        "product": "Aria Operations for Networks", 
-        "id": "vrni"
-    },
-    {
-        "product": "Aria Automation Config", 
-        "id": "vssc"
-    },
-    {
-        "product": "Aria Automation Orchestrator", 
-        "id": "vro"
-    }]
+    }
 }

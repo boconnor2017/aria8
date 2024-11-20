@@ -12,7 +12,6 @@ import os
 import sys
 import requests
 import urllib3
-import json
 session = requests.session()
 session.verify = False
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -123,14 +122,15 @@ def _main_():
     err = "Getting available product versions."
     liblog.write_to_logs(err, logfile_name)
     i=0
-    while i < len(env_json_py["product_ids"]):
-        err = "    ID: "+env_json_py["product_ids"][i]["id"]
+    while i < len(env_json_py["products"]):
+        err = "    ID: "+env_json_py["products"][i]["id"]+" ("+env_json_py["products"][i]["name"]+")"
         liblog.write_to_logs(err, logfile_name)
-        aslcm_session_return_json, aslcm_session_return_code = arialib.get_aslcm_product_versions(aslcm_token, env_json_py["aria"]["lifecycle_manager"]["fqdn"], env_json_py["product_ids"][i]["id"])
-        err = "    Return Code: "+aslcm_session_return_code
+        aslcm_session_return_json, aslcm_session_return_code = arialib.get_aslcm_product_versions(aslcm_token, env_json_py["aria"]["lifecycle_manager"]["fqdn"], env_json_py["products"][i]["id"])
+        err = "    Return: "+str(aslcm_session_return_code)
         liblog.write_to_logs(err, logfile_name)
-        product_versions = json.dumps(aslcm_session_return_json)
-        err = "    Product Versions: "+product_versions
+        product_versions = libjson.dump_json(aslcm_session_return_json)
+        err = "    Available Product Versions: "+product_versions
+        liblog.write_to_logs(err, logfile_name)
         i=i+1
     
 
