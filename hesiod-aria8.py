@@ -134,6 +134,8 @@ def _main_():
         i=i+1
     
     # Pause for Manual Downloads
+    err = "Pausing for manual downloads."
+    liblog.write_to_logs(err, logfile_name)
     '''
     Following the VMware by Broadcom Day 2 transition on May 6, 2024, 
     Customer Connect has been migrated to the Broadcom Support. 
@@ -161,17 +163,53 @@ def _main_():
     print("############################################################################")
     print("############################################################################")
     print("")
-    print("(Booooo...)")
+    print(" >:0 >:0 >:0 >:0 Booooo!!! >:0 >:0 >:0 >:0 ")
+    print("")
+    print("Ok... now that we got that out of our system...")
     print("")
     print("Follow these manual steps very carefully before proceeding:")
     print("    01. Login to the Broadcom Support Portal: https://support.broadcom.com/group/ecx/downloads")
     print("    02. Find \"VMWare Aria Universal\" >> Open \"Enterprise\" >> click \"Subscription\"")
     print("    03. Download VIRTUAL APPLIANCES (not the easy installers) for: Aria Automation, Aria Automation Config, Aria Operations, and Aria Operations for Logs.")
-    print("    04. Login to Aria Suite Lifecycle Manager.")
-    print("    05. Select Lifecycle Operations >> Settings >> Binary Mapping.")
-    print("    06. Click \"Add Binaries\". Point to the base location of your ovas. Click \"Discover\". ")
+    print("    PATH A: CLI (Linux)")
+    print("    04a. ssh into Aria Suite Lifecycle Manager using root credentials.")
+    print("    05a. Navigate to /data directory. Create a drop/ folder (example: /data/drop)")
+    print("    06a. cd to the /data/drop/ folder. sftp to the macine with the downloaded ovas. Run get command to retrieve the ovas.")
+    print("    07a. Login to the Aria Suite LCM UI. Select Lifecycle Operations >> Settings >> Binary Mapping.")
+    print("    08a. Click \"Add Binaries\". Point to the base location of your ovas (/data/drop). Click \"Discover\". Check all boxes and click \Add\".")
+    print("    PATH B: UI (Windows/Linux)")
+    print("    04b. Using an sftp tool like FileZilla or equivalent, move the downloaded ovas to a drop folder on the Aria Suite LCM appliance (recommended: /data/drop)")
+    print("    05b. Select Lifecycle Operations >> Settings >> Binary Mapping.")
+    print("    06b. Click \"Add Binaries\". Point to the base location of your ovas (/data/drop). Click \"Discover\". Check all boxes and click \Add\". ")
     print("")
-    continue_the_cool_after_manual_nonesense = input("Press any key to continue.")
+    continue_the_cool_after_manual_nonesense = input("Type your greivances for the logs and hit 'Enter' to continue. ")
+    err = "Grievances: "+continue_the_cool_after_manual_nonesense
+    liblog.write_to_logs(err, logfile_name)
+    print("Continuing.")
 
+    # Add Aria Suite Licenses
+    err = "Adding license keys."
+    liblog.write_to_logs(err, logfile_name)
+    i=0 
+    while i < len(env_json_py["aria"]["licenses"]):
+        err = "    "+env_json_py["aria"]["licenses"][i]["alias"]+"/"+env_json_py["aria"]["licenses"][i]["key"]
+        liblog.write_to_logs(err, logfile_name)
+        aslcm_session_return_json, aslcm_session_return_code = arialib.add_license_key_to_aslcm_locker(aslcm_token, env_json_py["aria"]["lifecycle_manager"]["fqdn"], env_json_py["aria"]["licenses"][i]["alias"], env_json_py["aria"]["licenses"][i]["key"])
+        err = "    Return: "+str(aslcm_session_return_code)
+        liblog.write_to_logs(err, logfile_name)
+        if aslcm_session_return_code == 409:
+            #409 error likely means the license key already exists
+            err = "    Message: "+aslcm_session_return_json["message"]
+            liblog.write_to_logs(err, logfile_name)
+        else:
+            err = "    Request ID: "+aslcm_session_return_json["requestId"]
+            liblog.write_to_logs(err, logfile_name)
+            seconds = 120
+            err = "Pausing "+str(seconds)+" seconds to complete license validation."
+            liblog.write_to_logs(err, logfile_name)
+            libgen.pause_python_for_duration(seconds)
+            err = "Pausing "+str(seconds)+" seconds to complete license validation."
+            liblog.write_to_logs(err, logfile_name)
+        i=i+1
 
 _main_()

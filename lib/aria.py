@@ -13,6 +13,19 @@ def authenticate_to_aslcm(aslcm_user, aslcm_pw, aslcm_fqdn):
     aslcm_session_return_code = (aslcm_session.status_code)
     return aslcm_token, aslcm_session_return_code
 
+def add_license_key_to_aslcm_locker(aslcm_token, aslcm_fqdn, license_alias, license_key):
+    #Syntax: curl -k -X POST 'https://hesvcf-aria01.hesiod.local/lcm/locker/api/v2/license/validate-and-add' -H 'Accept: application/json' -H 'Authorization: Basic YWRtaW5AbG9jYWw6Vk13YXJlMTIzIVZNd2FyZTEyMyE=' -H 'Content-Type: application/json' -d '{"alias": "license1", "serialKey": "AB0DC-EF280-48JH1-00024-1JK"}'
+    # /lcm/locker/api/v2/license/validate-and-add
+    req_headers = {"Accept": "application/json", "Authorization": "Basic "+aslcm_token, "Content-Type": "application/json"}
+    req_data = {
+        "alias": license_alias, 
+        "serialKey": license_key
+    }
+    aslcm_session = requests.post("https://"+aslcm_fqdn+"/lcm/locker/api/v2/license/validate-and-add", headers=req_headers, json=req_data, verify=False)
+    aslcm_session_return_code = (aslcm_session.status_code)
+    aslcm_session_return_json = (aslcm_session.json())
+    return aslcm_session_return_json, aslcm_session_return_code
+
 def add_vcenter_to_aslcm_datacenter(aslcm_token, aslcm_fqdn, vcenter_name, vcenter_fqdn, vcenter_username, vcenter_password, vcenter_used_as, dc_vm_id):
     #Syntax: curl -k -X POST '$url/lcm/lcops/api/v2/datacenters/$dataCenterVMid/vcenters' -H 'Accept: application/json' -H 'Authorization: Basic YWRtaW5AbG9jYWw6VGhpc0lzUGFzc3dvcmQ=' -H 'Content-Type: application/json' -d '{"vCenterName": "VC1","vCenterHost": "lcm-vc2.sqa.local","vcUsername": "administrator@vsphere.local","vcPassword": "MyExamplePassword","vcUsedAs": "MANAGEMENT"}'
     req_headers = {"Accept": "application/json", "Authorization": "Basic "+aslcm_token, "Content-Type": "application/json"}
@@ -69,6 +82,14 @@ def get_aslcm_datacenters(aslcm_token, aslcm_fqdn):
 def get_aslcm_product_versions(aslcm_token, aslcm_fqdn, product_id):
     #Syntax: curl -k -X GET '$url/lcm/lcops/api/v2/policy/products/{productId}/versions' -H 'Authorization: Basic YWRtaW5AbG9jYWw6VGhpc0lzUGFzc3dvcmQ=' -H 'Accept: application/json'
     aslcm_session = requests.get("https://"+aslcm_fqdn+"/lcm/lcops/api/v2/policy/products/"+product_id+"/versions", headers={"Authorization": "Basic "+aslcm_token, "Accept": "application/json"}, verify=False)
+    aslcm_session_return_code = (aslcm_session.status_code)
+    aslcm_session_return_json = (aslcm_session.json())
+    return aslcm_session_return_json, aslcm_session_return_code
+
+def get_status_of_aslcm_request(aslcm_token, aslcm_fqdn, request_id):
+    #Syntax: curl -X GET '$url /lcm/request/api/v2/requests/$requestId' -H 'Authorization: Basic YWRtaW5AbG9jYWw6VGhpc0lzUGFzc3dvcmQ=' 
+    req_headers = {"Authorization": "Basic "+aslcm_token}
+    aslcm_session = requests.get("https://"+aslcm_fqdn+"/lcm/request/api/v2/requests/"+request_id, headers=req_headers)
     aslcm_session_return_code = (aslcm_session.status_code)
     aslcm_session_return_json = (aslcm_session.json())
     return aslcm_session_return_json, aslcm_session_return_code

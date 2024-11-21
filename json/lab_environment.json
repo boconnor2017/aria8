@@ -39,6 +39,10 @@
         }
     }, 
     "aria" : {
+        "licenses" : [{
+            "alias" : "<product_name>",
+            "key" : ""
+        }],
         "lifecycle_manager" : {
             "username" : "admin@local",
             "password" : "",
