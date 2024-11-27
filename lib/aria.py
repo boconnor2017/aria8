@@ -51,6 +51,14 @@ def create_aslcm_data_center(aslcm_token, aslcm_fqdn, datacenter_name, datacente
     aslcm_session_return_code = (aslcm_session.status_code)
     return aslcm_session_return_code
 
+def create_aslsm_environment(aslcm_token, aslcm_fqdn):
+    #Syntax: /lcm/lcops/api/v2/environments
+    req_url = generate_api_post_url("/lcm/lcops/api/v2/environments", aslcm_fqdn)
+    req_headers={"Accept": "application/json", "Authorization": "Basic "+aslcm_token, "Content-Type": "application/json"}
+    req_data={
+
+    }
+
 def create_aslcm_locker_users(aslcm_token, aslcm_fqdn, new_password, new_username):
     #Syntax: curl -k -X POST '$url/lcm/locker/api/v2/passwords' -H 'Authorization: Basic <token>' -H 'Content-Type: application/json' -d '{"alias": "VC-password", "password": "ExampleLockerPassword", "passwordDescription": "", "principal": "", "transactionId": "", "userName": ""}'
     req_headers={"Accept": "application/json", "Authorization": "Basic "+aslcm_token, "Content-Type": "application/json"}
@@ -68,7 +76,6 @@ def create_aslcm_locker_users(aslcm_token, aslcm_fqdn, new_password, new_usernam
 
 def generate_aslcm_certificate(aslcm_token, aslcm_fqdn, cert_name, cert_common_name, cert_organization, cert_org_unit, cert_country_code, cert_locality, cert_state, cert_key_length, cert_hostnames, cert_ips ):
     #Syntax: curl -X POST '$url/lcm/locker/api/v2/certificates' -H 'Accept: application/json' -H 'Authorization: Basic YWRtaW5AbG9jYWw6VGhpc0lzUGFzc3dvcmQ=' -H 'Content-Type: application/json' -d '{ "alias": "cert2", "c": "certificate2", "cN": "certificate2", "ip": ["10.196.15.13"], "host": ["*.sqa.local"], "cN": "vmware", "oU": "vmware", "size": "2048", "o": "vmware", "l": "IN", "sT": "IN", "c": "IN"}'
-    #Sample: curl -k -X POST 'https://hesvcf-aria01.hesiod.local/lcm/locker/api/v2/certificates' -H 'Accept: application/json' -H 'Authorization: Basic YWRtaW5AbG9jYWw6Vk13YXJlMTIzIVZNd2FyZTEyMyE=' -H 'Content-Type: application/json' -d '{ "alias": "TEST", "c": "certificate2", "cN": "certificate2", "ip": [], "host": ["*.hesiod.local"], "cN": "vmware", "oU": "vmware", "size": "2048", "o": "vmware", "l": "IN", "sT": "IN", "c": "IN"}'
     req_headers={"Accept": "application/json", "Authorization": "Basic "+aslcm_token, "Content-Type": "application/json"}
     req_data={
         "alias": cert_name, 
@@ -124,3 +131,9 @@ def list_vms_from_vcenter(vsphere_client):
     vm_list = vsphere_client.vcenter.VM.list()
     return vm_list
 
+# Custom Functions
+def generate_api_post_url(api_url, fqdn):
+    #Syntax: copy path from swagger - example: /lcm/lcops/api/v2/environments
+    #This script will create the necessary url for requests.post(url)
+    req_url = "https://"+fqdn+api_url
+    return req_url

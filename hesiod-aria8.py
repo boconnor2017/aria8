@@ -35,7 +35,7 @@ liblog.write_to_logs(err, logfile_name)
 # Local Functions
 def _main_():
     # CLI Message
-    print("Deploying Aria Suite.")
+    print("Deploying Aria Suite. For details on the tasks please see the logs.")
 
     # Connect to Management vCenter using JSON config params
     err = "Connecting to vCenter: IP="+env_json_py["vcf"]["management_vcenter"]["ip"]+", UN="+env_json_py["vcf"]["management_vcenter"]["username"]+", "+env_json_py["vcf"]["management_vcenter"]["password"]
@@ -49,7 +49,6 @@ def _main_():
     liblog.write_to_logs(err, logfile_name)
 
     # Deploy Aria Suite Lifecycle Manager and Get Token
-    print("    TODO: Deploy Aria Suite Lifecycle Manager ova.")
     err = "Connecting to Aria Suite LCM. FQDN: "+env_json_py["aria"]["lifecycle_manager"]["fqdn"]
     liblog.write_to_logs(err, logfile_name)
     aslcm_token, aslcm_session_return_code = arialib.authenticate_to_aslcm(env_json_py["aria"]["lifecycle_manager"]["username"], env_json_py["aria"]["lifecycle_manager"]["password"], env_json_py["aria"]["lifecycle_manager"]["fqdn"])
@@ -167,7 +166,7 @@ def _main_():
     print("")
     print("Ok... now that we got that out of our system...")
     print("")
-    print("Follow these manual steps very carefully before proceeding:")
+    print("Follow these manual steps very carefully before proceeding (if you haven't already):")
     print("    01. Login to the Broadcom Support Portal: https://support.broadcom.com/group/ecx/downloads")
     print("    02. Find \"VMWare Aria Universal\" >> Open \"Enterprise\" >> click \"Subscription\"")
     print("    03. Download VIRTUAL APPLIANCES (not the easy installers) for: Aria Automation, Aria Automation Config, Aria Operations, and Aria Operations for Logs.")
@@ -180,12 +179,13 @@ def _main_():
     print("    PATH B: UI (Windows/Linux)")
     print("    04b. Using an sftp tool like FileZilla or equivalent, move the downloaded ovas to a drop folder on the Aria Suite LCM appliance (recommended: /data/drop)")
     print("    05b. Select Lifecycle Operations >> Settings >> Binary Mapping.")
-    print("    06b. Click \"Add Binaries\". Point to the base location of your ovas (/data/drop). Click \"Discover\". Check all boxes and click \Add\". ")
+    print("    06b. Click \"Add Binaries\". Point to the base location of your ovas (/data/drop). Click \"Discover\". Check all boxes and click \"Add\". ")
     print("")
     continue_the_cool_after_manual_nonesense = input("Type your greivances for the logs and hit 'Enter' to continue. ")
     err = "Grievances: "+continue_the_cool_after_manual_nonesense
     liblog.write_to_logs(err, logfile_name)
-    print("Continuing.")
+    print("")
+    print("Continuing with Aria deployment.")
 
     # Add Aria Suite Licenses
     err = "Adding license keys."
@@ -227,4 +227,8 @@ def _main_():
             liblog.write_to_logs(err, logfile_name)
         i=i+1
 
+    
+    # End
+    print("")
+    print("Aria deployment completed.")
 _main_()
