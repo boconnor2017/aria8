@@ -66,6 +66,27 @@ def create_aslcm_locker_users(aslcm_token, aslcm_fqdn, new_password, new_usernam
     aslcm_session_return_code = (aslcm_session.status_code)
     return aslcm_session_return_code
 
+def generate_aslcm_certificate(aslcm_token, aslcm_fqdn, cert_name, cert_common_name, cert_organization, cert_org_unit, cert_country_code, cert_locality, cert_state, cert_key_length, cert_hostnames, cert_ips ):
+    #Syntax: curl -X POST '$url/lcm/locker/api/v2/certificates' -H 'Accept: application/json' -H 'Authorization: Basic YWRtaW5AbG9jYWw6VGhpc0lzUGFzc3dvcmQ=' -H 'Content-Type: application/json' -d '{ "alias": "cert2", "c": "certificate2", "cN": "certificate2", "ip": ["10.196.15.13"], "host": ["*.sqa.local"], "cN": "vmware", "oU": "vmware", "size": "2048", "o": "vmware", "l": "IN", "sT": "IN", "c": "IN"}'
+    #Sample: curl -k -X POST 'https://hesvcf-aria01.hesiod.local/lcm/locker/api/v2/certificates' -H 'Accept: application/json' -H 'Authorization: Basic YWRtaW5AbG9jYWw6Vk13YXJlMTIzIVZNd2FyZTEyMyE=' -H 'Content-Type: application/json' -d '{ "alias": "TEST", "c": "certificate2", "cN": "certificate2", "ip": [], "host": ["*.hesiod.local"], "cN": "vmware", "oU": "vmware", "size": "2048", "o": "vmware", "l": "IN", "sT": "IN", "c": "IN"}'
+    req_headers={"Accept": "application/json", "Authorization": "Basic "+aslcm_token, "Content-Type": "application/json"}
+    req_data={
+        "alias": cert_name, 
+        "cN": cert_common_name, 
+        "ip": cert_ips, 
+        "host": cert_hostnames,
+        "oU": cert_org_unit, 
+        "size": cert_key_length, 
+        "o": cert_organization, 
+        "l": cert_locality, 
+        "sT": cert_state, 
+        "c": cert_country_code
+    }
+    aslcm_session = requests.post("https://"+aslcm_fqdn+"/lcm/locker/api/v2/certificates", headers=req_headers, json=req_data, verify=False)
+    aslcm_session_return_code = (aslcm_session.status_code)
+    return aslcm_session_return_code
+ 
+
 def get_aslcm_auth_token(aslcm_user, aslcm_pw):
     aslcm_token_b64 = base64.b64encode(bytes(aslcm_user+":"+aslcm_pw, 'utf-8'))
     aslcm_token = aslcm_token_b64.decode('utf-8')

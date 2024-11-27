@@ -212,4 +212,19 @@ def _main_():
             liblog.write_to_logs(err, logfile_name)
         i=i+1
 
+    # Generate a new certificate
+    err = "Generating certificate."
+    liblog.write_to_logs(err, logfile_name)
+    i=0
+    while i < len(env_json_py["aria"]["certificates"]):
+        err = "    Cert "+str(i)+": "+env_json_py["aria"]["certificates"][i]["cert_name"]
+        aslcm_session_return_code = arialib.generate_aslcm_certificate(aslcm_token, env_json_py["aria"]["lifecycle_manager"]["fqdn"], env_json_py["aria"]["certificates"][i]["cert_name"], env_json_py["aria"]["certificates"][i]["cert_common_name"], env_json_py["aria"]["certificates"][i]["cert_organization"], env_json_py["aria"]["certificates"][i]["cert_org_unit"], env_json_py["aria"]["certificates"][i]["cert_country_code"], env_json_py["aria"]["certificates"][i]["cert_locality"], env_json_py["aria"]["certificates"][i]["cert_state"], env_json_py["aria"]["certificates"][i]["cert_key_length"], env_json_py["aria"]["certificates"][i]["cert_hostnames"], env_json_py["aria"]["certificates"][i]["cert_ips"])
+        err = "    Return: "+str(aslcm_session_return_code)
+        liblog.write_to_logs(err, logfile_name)
+        if aslcm_session_return_code == 409:
+            #409 error likely means the certificate already exists
+            err = "    (409) Certificate already exists."
+            liblog.write_to_logs(err, logfile_name)
+        i=i+1
+
 _main_()

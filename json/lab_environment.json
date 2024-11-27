@@ -55,6 +55,18 @@
         "lifecycle_manager_datacenters" : [{
             "name" : "", 
             "location" : ""
-        }]
+        }],
+        "certificates" : [{
+            "cert_name" : "",
+            "cert_common_name" : "", 
+            "cert_ips" : [""], 
+            "cert_hostnames" : [""],
+            "cert_org_unit" : "", 
+            "cert_key_length" : 2048, 
+            "cert_organization" : "", 
+            "cert_locality" : "", 
+            "cert_state" : "", 
+            "cert_country_code" : ""
+        }] 
     }
 }
