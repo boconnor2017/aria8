@@ -18,7 +18,8 @@ The following infrastructure is **required** to run `hesiod-aria8.py`:
 
 | Requirement | Description |
 |-------------|-------------|
-| VMware Cloud Foundation Management Domain | version 5.2 recommended (AVN is optional) |
+| DNS Server  | recommended: use [hesiod-dns](https://github.com/boconnor2017/hesiod-dns) to spin up an immutable DNS server and configure necessary DNS entries for VCF |
+| VMware Cloud Foundation Management Domain | version 5.2 recommended (AVN is optional), nested is supported (if using nested, its recommended to use [hesiod-vcf5](https://github.com/boconnor2017/hesiod-vcf5)) |
 | Aria Suite Lifecycle Manager | version 8.18 must be deployed |
 
 The following binaries are recommended to run `hesiod-aria8.py` (binaries must be uploaded to the Aria Suite Lifecycle Manager `/data/drop/` folder):
